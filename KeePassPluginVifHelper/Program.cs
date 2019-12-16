@@ -78,23 +78,17 @@ namespace KeePassPluginVifHelper
 				if (newLine.Length > 0)
 					payload += newLine + "\n";
 			}
-			payload = payload.TrimEnd();
 
 			byte[] payloadBytes = Encoding.UTF8.GetBytes(payload);
-			byte[] payloadHash;
-			using (SHA512 shaM = new SHA512Managed())
-			{
-				payloadHash = shaM.ComputeHash(payloadBytes);
-			}
 
-			byte[] signedHash;
-			using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
+			byte[] signedData;
+			using (RSA rsa = RSA.Create())
 			{
 				rsa.FromXmlString(File.ReadAllText(privateKeyPath));
-				signedHash = rsa.SignData(payloadHash, HashAlgorithmName.SHA512, RSASignaturePadding.Pkcs1);
+				signedData = rsa.SignData(payloadBytes, HashAlgorithmName.SHA512, RSASignaturePadding.Pkcs1);
 			}
 
-			string finalPayloadHash = Convert.ToBase64String(signedHash);
+			string finalPayloadHash = Convert.ToBase64String(signedData);
 
 			vifLines[0] = vifLines[0] + finalPayloadHash;
 
