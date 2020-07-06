@@ -1,4 +1,6 @@
 # KeePassPluginVifHelper
+[![License: WTFPL](https://img.shields.io/badge/License-WTFPL-brightgreen.svg)](http://www.wtfpl.net/about/)
+
 A small tool for signing and preparing a KeePass Plugin Version Information File.
 Complies with the instructions specified [on the KeePass Password Safe website](https://keepass.info/help/v2_dev/plg_index.html#upd) as of 2019-12-16.
 
